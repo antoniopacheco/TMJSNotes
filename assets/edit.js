@@ -12,7 +12,8 @@ if(typeof(Storage) !== "undefined") {
 		allMyNotes =  JSON.parse(allMyNotes);
 		var lookup = {}
 		for (var i = 0; i< allMyNotes.length; i++) {
-		    lookup[allMyNotes[i].id] = allMyNotes[i];
+			if(allMyNotes[i])
+		    	lookup[allMyNotes[i].id] = allMyNotes[i];
 		}
 		var nextID=allMyNotes.length+1;
 	}
@@ -21,25 +22,15 @@ if(typeof(Storage) !== "undefined") {
 }
 
 	addEvent(window,"load",function(){
+  		var idDoc = window.location.search.substring(1);
+	  	document.getElementById("editor").value =  lookup[idDoc].text.replace(/<br\s*\/?>/mg,"\n");;
+		name =document.getElementById("name").value = lookup[idDoc].name;
+		var saveBtn = document.getElementById("save");
 
-  var idDoc = window.location.search.substring(1);
-  	document.getElementById("editor").value =  lookup[idDoc].text.replace(/<br\s*\/?>/mg,"\n");;
-	name =document.getElementById("name").value = lookup[idDoc].name;
-	var saveBtn = document.getElementById("save");
-
-	// var handler = addEvent(saveBtn, "click", function(){
-	// 	//get the data
-	// 	var text =document.getElementById("editor").value;
-	// 	//get the name
-	// 	var name =document.getElementById("name").value;
-	// 	text = text.replace(/\n\r?/g, '<br />');
-	// 	var store = {
-	// 		name: name,
-	// 		text: text,
-	// 		'id': nextID
-	// 	};
-	// 	allMyNotes.push(store);
-	// 	nextID++;
-	// 	localStorage.setItem("myNotes", JSON.stringify(allMyNotes));
-	// });
+		var handler = addEvent(saveBtn, "click", function(){
+			//get the new data
+			var text =document.getElementById("editor").value;
+			lookup[idDoc].text = text.replace(/\n\r?/g, '<br />');
+			localStorage.setItem("myNotes", JSON.stringify(allMyNotes));
+		});
 });
