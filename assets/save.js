@@ -25,7 +25,9 @@ addEvent(window,"load",function(){
 		var store = {
 			name: name,
 			text: text,
-			'id': nextID
+			'id': nextID,
+			'created_at': new Date().getTime(),
+			'updated_at': new Date().getTime()
 		};
 		allMyNotes.push(store);
 		nextID++;

@@ -31,6 +31,7 @@ if(typeof(Storage) !== "undefined") {
 			//get the new data
 			var text =document.getElementById("editor").value;
 			lookup[idDoc].text = text.replace(/\n\r?/g, '<br />');
+			lookup[idDoc].updated_at = new Date().getTime();
 			localStorage.setItem("myNotes", JSON.stringify(allMyNotes));
 		});
 });
